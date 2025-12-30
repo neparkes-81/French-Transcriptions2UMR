@@ -1,5 +1,5 @@
 # French AMR to UMR
-In this section of the Ding project repository, we define a workflow for converting
+This repository showcases my contribution of the Ding Semantics of French Speech project. Here, I define a workflow for converting
 our AMRs of French speech transcriptions to automatically-produced semi-completed UMRs.
 We specifically developed a pipeline which converts our transcriptions into Universal Dependency
 trees, then into Uniform Meaning Representations, or UMRs.
