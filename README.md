@@ -1,8 +1,8 @@
 # French AMR to UMR
 This repository showcases my contribution to the DinG project retrieving semantic data from spontaneous French dialouge. Here, I define a workflow for converting
-our AMRs of French speech transcriptions to automatically-produced semi-completed UMRs.
+our Abstract Meaning Repersentations, or AMRs, of French speech transcriptions to automatically-produced semi-completed  Uniform Meaning Representations, UMRs.
 We specifically developed a pipeline which converts our transcriptions into Universal Dependency
-trees, then into Uniform Meaning Representations, or UMRs.
+trees, then into UMRs.
 
 ## Set up Enviornment
 This pipeline for converting French AMR to UMR requires the Python packages `penman`, `udapi` `word2number`, `googletrans==4.0.0-rc1`, `scikit-learn`, and `stanza`
