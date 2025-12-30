@@ -1,0 +1,96 @@
+#!/usr/bin/env python3
+# Copyright © 2025 Federica Gamba <gamba@ufal.mff.cuni.cz>
+# Modified by Nathaniel Parkes
+
+import os
+import argparse
+import udapi
+from umr_node import UMRNode
+from umr_graph import UMRGraph
+import preprocess as pr
+from print_structure import print_structure
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--treebank", help="Path of the treebank in input.", required=True)
+parser.add_argument("--lang", help="Language code of the treebank (e.g., 'en' for English).", required=True)
+#parser.add_argument("--data_dir",
+#                    help="Path of the directory where the input treebanks are stored, if not 'data'.", default='./data')
+parser.add_argument("--output_dir",
+                    help="Path of the directory where converted UMRs are stored, if not 'output'.", default='./output')
+parser.add_argument("--var_naming",
+                    help="Specify whether to use the first letter of the concept as the variable name (default), or use 'x' instead.",
+                    choices=['first', 'x'], default='first')
+
+
+if __name__ == "__main__":
+
+    args = parser.parse_args()
+    doc = udapi.Document(args.treebank)
+    sent_num = 0
+
+    interpersonal = pr.load_external_files('have_rel_role.txt', args.lang)
+    advcl = pr.load_external_files('advcl.csv', args.lang)
+    modals = pr.load_external_files('modality.json', args.lang)
+    conjunctions = pr.load_external_files('conj.json', args.lang)
+
+    # with open("testset/sent-ids_converted_70_test.txt", "r", encoding="utf8") as for_test_file:  # to produce the test set
+    # with open("testset/sent-ids_manual_30_test.txt", "r", encoding="utf8") as for_test_file:  # to produce the test set
+    #     test = for_test_file.read().splitlines()
+
+    os.makedirs(args.output_dir, exist_ok=True)
+    with open(os.path.join(args.output_dir, f"{args.treebank.split('/')[-1].split('.')[0]}.umr"), "w",  encoding="utf-8") as output:
+    # with open(f"testset/converted_{args.lang}_test.txt", "w", encoding="utf-8") as output:  # to produce the test set for annotation
+    # with open(f"testset/converter-output_30_{args.lang}_test.txt", "w", encoding="utf-8") as output:  # to produce the merged test set
+
+        for tree in doc.trees:
+
+            # if tree.address() in test:
+
+                sent_num += 1
+
+                deprels_to_relations = pr.get_deprels(tree)
+                sent_tree = UMRGraph(tree, sent_num, deprels_to_relations, args.lang, args.var_naming, interpersonal, advcl, modals, conjunctions)
+
+                print(tree)
+                print(sent_tree)
+                # First pass: create variables for UD nodes.
+                for node in tree.descendants:
+                    if node.deprel not in ['aux', 'case', 'punct', 'mark']:
+                        role = pr.get_role_from_deprel(node, deprels_to_relations)
+                        item = UMRNode(node, sent_tree, role=role)
+
+                # Second pass: assign initial parents after all nodes have been created.
+                for n in sent_tree.nodes:
+                    parent = n.find_by_ud_node(sent_tree, n.ud_node.parent)
+                    n.parent = parent[0] if parent else None
+
+
+        # Third pass: create relations between variables and build the UMR structure.
+                err = False
+                for n in sent_tree.nodes:
+                    if not isinstance(n.ud_node, str):
+                        try:
+                            n.ud_to_umr()
+                        except:
+                            err = True
+                            break
+
+
+                # Fourth pass: replace nodes that are supposed to correspond to a UMR entity (PRON, PROPN).
+                # They are processed separately to avoid clashes with layered constructions (e.g., abstract rolesets).
+                for n in sent_tree.nodes:
+                    n.replace_entities()
+
+                umr, root = sent_tree.to_penman()
+
+                # if error interrupts UMR creation just create empty tree and continue
+                if err:
+                    umr = None
+
+                # Print out the UMR structure
+                print_structure(tree, sent_tree, umr, root, sent_num, output, print_in_file=True)
+
+                # break
+
+    print()
+    print('UD2UMR conversion completed!')

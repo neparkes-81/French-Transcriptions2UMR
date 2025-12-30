@@ -1,0 +1,14 @@
+lemma,type,constraint_on_parent,polarity
+when,temporal,,
+before,temporal,,
+until,temporal,,
+once,temporal,,
+after,temporal,,
+because,cause,,
+although,concession,,
+though,concession,,
+unless,condition,,-
+if,condition,,
+provided,condition,,
+without,manner,VerbForm=Ger,-
+by,manner,VerbForm=Ger,
