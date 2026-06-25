@@ -1,7 +1,7 @@
 import re
 
 """
-This script converts Ding AMR files into a valid input file for Flaubertagger
+This script converts Ding AMR files into isolated sentences/ valid input file for Stanza
  - input:
     .amr or .txt file in amr format
 
