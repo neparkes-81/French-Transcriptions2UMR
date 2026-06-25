@@ -1,9 +1,9 @@
 # French AMR to UMR
-This repository showcases my contribution to the DinG project, retrieving semantic data (the core, unambiguous meaning) from utterances of spontaneous French dialogue. This project has collected ample human annotations in Abstract Meaning Representation (AMR) format. Although, as AMR was built for English, we seek to convert these annotations to Uniform Meaning Representations (UMRs), a language-agnotic notation which can better reflect the nuances of French speech and thus lend a more accurate hand to downstream NLP tasks (text summarization, machine translation edge cases, etc.). 
+This repository showcases my contribution to the DinG project, retrieving semantic data (the core, unambiguous meaning) from utterances of spontaneous French dialogue. This project has collected ample human annotations in Abstract Meaning Representation (AMR) format. Although, as AMR was built for English, we seek to convert these annotations to Uniform Meaning Representations (UMRs), a language-agnostic notation which can better reflect the nuances of French speech and thus, lend a more accurate hand to downstream NLP tasks (text summarization, machine translation edge cases, etc.). 
 
 Here, I define a workflow for automatically converting
 our AMRs of French speech transcriptions to semi-completed UMRs. We specifically developed a pipeline which converts our transcriptions into Universal Dependency (UD)
-trees, then into UMRs. This automatation will reduce annotation labor for future linguistic researchers on this project.
+trees, then into UMRs. This automation will reduce annotation labor for future linguistic researchers on this project.
 
 ## Table of Contents
 - [My Contribution](#my-contribution)
@@ -18,7 +18,7 @@ trees, then into UMRs. This automatation will reduce annotation labor for future
 - [Cited Works](#cited-works)
 
 ## My Contribution
-I built the preprocessing pipeline to convert speech trancriptions into UD trees utilizing heuristic data cleaning/ parsing and Stanza integration for UD conversion. I wrote formatting script to prepare this output for UD-to-UMR conversion. Finally, I completed the pipeline by augmentting pre-built UD-to-UMR conversion scripts to work with our data and annotation rules.
+I built the preprocessing pipeline to convert speech transcriptions into UD trees utilizing heuristic data cleaning/ parsing and Stanza integration for UD conversion. I wrote formatting script to prepare this output for UD-to-UMR conversion. Finally, I completed the pipeline by augmenting pre-built UD-to-UMR conversion scripts to work with our data and annotation rules.
 
 ## Architecture
 ![Architecture Diagram](./assets/French%20AMR%20Conversion-2026-06-25-155631.png)
@@ -95,7 +95,7 @@ README.md
 ```
 
 ## Limitations
-Due to the usage of Stanza's neural pipeline for UD conversion, I note some variable noise in its output where productions unique to spoken language in our collected transcriptions diverted from, or showed limited occurence in the model's training data. While certain issues were systematically fixed in the augmented UD-to-UMR script, I still heavily advise human review to ensure accuracy of all outputs.
+Due to the usage of Stanza's neural pipeline for UD conversion, I note some variable noise in its output where productions unique to spoken language in our collected transcriptions diverted from, or showed limited occurrence in the model's training data. While certain issues were systematically fixed in the augmented UD-to-UMR script, I still heavily advise human review to ensure accuracy of all outputs.
 
 ## Cited Works
 
