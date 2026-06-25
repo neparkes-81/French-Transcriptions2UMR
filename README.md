@@ -1,12 +1,19 @@
 # French AMR to UMR
-This repository showcases my contribution to the DinG project retrieving semantic data from spontaneous French dialouge. Here, I define a workflow for converting
-our Abstract Meaning Repersentations, or AMRs, of French speech transcriptions to automatically-produced semi-completed  Uniform Meaning Representations, UMRs.
-We specifically developed a pipeline which converts our transcriptions into Universal Dependency
-trees, then into UMRs.
+This repository showcases my contribution to the DinG project, retrieving semantic data (the core, unambiguous meaning) from utterances of spontaneous French dialogue. This project has collected ample human annotations in Abstract Meaning Representation (AMR) format. Although, as AMR was built for English, we seek to convert these annotations to Uniform Meaning Representations (UMRs), a language-agnotic notation which can better reflect the nuances of French speech and thus lend a more accurate hand to downstream NLP tasks (text summarization, machine translation edge cases, etc.). 
 
-## Set up Enviornment
+Here, I define a workflow for automatically converting
+our AMRs of French speech transcriptions to semi-completed UMRs. We specifically developed a pipeline which converts our transcriptions into Universal Dependency (UD)
+trees, then into UMRs. This automatation will reduce annotation labor for future linguistic researchers on this project.
+
+## My Contribution
+I built the preprocessing pipeline to convert speech trancriptions into UD trees utilizing heuristic data cleaning/ parsing and Stanza integration for UD conversion. I wrote formatting script to prepare this output for UD-to-UMR conversion. Finally, I completed the pipeline by augmentting pre-built UD-to-UMR conversion scripts to work with our data and annotation rules.
+
+## Architecture
+![Architecture Diagram](./assets/French%20AMR%20Conversion-2026-06-25-155631.png)
+
+## Set up Environment
 This pipeline for converting French AMR to UMR requires the Python packages `penman`, `udapi` `word2number`, `googletrans==4.0.0-rc1`, `scikit-learn`, and `stanza`
-all listed in the `requirements.txt` file. We outline the steps for creating a proper python enviornment below:
+all listed in the `requirements.txt` file. We outline the steps for creating a proper python environment below:
 
 ### 1 ) Create conda environment 
 ```
@@ -24,7 +31,7 @@ mkdir -p preprocessing/output
 ```
 
 ## Run the Code
-The code creates a direct pipeline from French AMR to UMR ouput. Thus, only the following
+The code creates a direct pipeline from French AMR to UMR output. Thus, only the following
 argument is required
 * `--amr`: The path to the amr file. Anticipate .amr or .txt file in format seen in Ding amr files.
 
@@ -36,8 +43,11 @@ We provide an example command with an **input file**. The following input file i
 The final **output file** can be found in `ud_umr/output/`. Any other intermediary outputs, such as
 preprocessed data or universal dependencies, can be found in their respective directories.
 
+## Limitations
+Due to the usage of Stanza's neural pipeline for UD conversion, I note some variable noise in its output where productions unique to spoken language in our collected transcriptions diverted from, or showed limited occurence in the model's training data. While certain issues were systematically fixed in the augmented UD-to-UMR script, I still heavily advise human review to ensure accuracy of all outputs.
+
 ## Files
-As mentionned prior, outputs for any step of the process can be found in their respective
+As mentioned prior, outputs for any step of the process can be found in their respective
 `output/` directories. The contents of `ud_umr/` is forked from the UD2UMR project. The organization of such folders and project scripts can
 be found below:
 
