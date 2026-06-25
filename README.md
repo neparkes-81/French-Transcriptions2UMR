@@ -5,6 +5,18 @@ Here, I define a workflow for automatically converting
 our AMRs of French speech transcriptions to semi-completed UMRs. We specifically developed a pipeline which converts our transcriptions into Universal Dependency (UD)
 trees, then into UMRs. This automatation will reduce annotation labor for future linguistic researchers on this project.
 
+## Table of Contents
+- [My Contribution](#my-contribution)
+- [Architecture](#architecture)
+- [Set up Environment](#set-up-environment)
+  - [1 ) Create conda environment](#1--create-conda-environment)
+  - [2 ) Install packages](#2--install-packages)
+  - [3 ) Set Up Directories](#3--set-up-directories)
+- [Run the Code](#run-the-code)
+- [Files](#files)
+- [Limitations](#limitations)
+- [Cited Works](#cited-works)
+
 ## My Contribution
 I built the preprocessing pipeline to convert speech trancriptions into UD trees utilizing heuristic data cleaning/ parsing and Stanza integration for UD conversion. I wrote formatting script to prepare this output for UD-to-UMR conversion. Finally, I completed the pipeline by augmentting pre-built UD-to-UMR conversion scripts to work with our data and annotation rules.
 
@@ -42,9 +54,6 @@ We provide an example command with an **input file**. The following input file i
 ```
 The final **output file** can be found in `ud_umr/output/`. Any other intermediary outputs, such as
 preprocessed data or universal dependencies, can be found in their respective directories.
-
-## Limitations
-Due to the usage of Stanza's neural pipeline for UD conversion, I note some variable noise in its output where productions unique to spoken language in our collected transcriptions diverted from, or showed limited occurence in the model's training data. While certain issues were systematically fixed in the augmented UD-to-UMR script, I still heavily advise human review to ensure accuracy of all outputs.
 
 ## Files
 As mentioned prior, outputs for any step of the process can be found in their respective
@@ -84,6 +93,10 @@ ud_umr/
 requirements.txt                              
 README.md         
 ```
+
+## Limitations
+Due to the usage of Stanza's neural pipeline for UD conversion, I note some variable noise in its output where productions unique to spoken language in our collected transcriptions diverted from, or showed limited occurence in the model's training data. While certain issues were systematically fixed in the augmented UD-to-UMR script, I still heavily advise human review to ensure accuracy of all outputs.
+
 ## Cited Works
 
 > Gamba, F., Palmer, A., and Zeman, D. (forth.). Bootstrapping UMRs from Universal Dependencies for Scalable Multilingual Annotation.
