@@ -18,10 +18,11 @@ trees, then into UMRs. This automation will reduce annotation labor for future l
 - [Cited Works](#cited-works)
 
 ## My Contribution
-I built the preprocessing pipeline to convert speech transcriptions into UD trees utilizing heuristic data cleaning/ parsing and Stanza integration for UD conversion. I wrote formatting script to prepare this output for UD-to-UMR conversion. Finally, I completed the pipeline by augmenting pre-built UD-to-UMR conversion scripts to work with our data and annotation rules.
+I built the preprocessing pipeline to convert speech transcriptions into UD trees utilizing heuristic data cleaning/ parsing and Stanza integration for UD conversion. I wrote a formatting script to prepare this output for UD-to-UMR conversion. Finally, I completed the pipeline by augmenting pre-built UD-to-UMR conversion scripts to work with our data and annotation rules.
 
 ## Architecture
 ![Architecture Diagram](./assets/French%20AMR%20Conversion-2026-06-25-155631.png)
+*The pipeline moves from AMR input → preprocessing → Stanza UD conversion → UD2UMR conversion → semi-complete UMR output.*
 
 ## Set up Environment
 This pipeline for converting French AMR to UMR requires the Python packages `penman`, `udapi` `word2number`, `googletrans==4.0.0-rc1`, `scikit-learn`, and `stanza`
